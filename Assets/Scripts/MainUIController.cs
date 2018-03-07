@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * 单例模式
+ * 游戏main场景UI控制类，游戏逻辑主要在蛇头SnakeHead上
+ * */
 public class MainUIController : MonoBehaviour
 {
     private static MainUIController _instance;
@@ -12,15 +16,18 @@ public class MainUIController : MonoBehaviour
         }
     }
 
-    public bool hasBorder = true;
-    public bool isPause = false;
-    public int score = 0;
-    public int length = 0;
-    public Text msgText;
-    public Text scoreText;
-    public Text lengthText;
+    public bool hasBorder = true;	//是否有边界
+    public bool isPause = false;	//是否暂停
+    public int score = 0;			//得分
+    public int length = 0;			//长度
+
+    public Text msgText;		//阶段多少text
+    public Text scoreText;		//得分text
+    public Text lengthText;		//length text
+
     public Image pauseImage;
     public Sprite[] pauseSprites;
+
     public Image bgImage;
     private Color tempColor;
 
@@ -31,8 +38,10 @@ public class MainUIController : MonoBehaviour
 
     void Start()
     {
+		//获取border数据，根据数据来设置border
         if (PlayerPrefs.GetInt("border", 1) == 0)
         {
+			//隐藏bg里的border image
             hasBorder = false;
             foreach (Transform t in bgImage.gameObject.transform)
             {
@@ -43,6 +52,7 @@ public class MainUIController : MonoBehaviour
 
     void Update()
     {
+		//根据得分获取阶段，换背景color,
         switch (score / 100)
         {
             case 0:
@@ -89,6 +99,8 @@ public class MainUIController : MonoBehaviour
         lengthText.text = "长度:\n" + length;
     }
 
+	/* 通过拖拽的方式添加button事件 */
+	//暂停开始按钮
     public void Pause()
     {
         isPause = !isPause;
@@ -104,6 +116,7 @@ public class MainUIController : MonoBehaviour
         }
     }
 
+	//home按钮
     public void Home()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
